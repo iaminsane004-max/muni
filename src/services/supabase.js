@@ -1,8 +1,13 @@
 import { createClient } from "@supabase/supabase-js";
 
-// Read directly from development / environment variables
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Read from environment variables with fallback for production hosting (e.g. Vercel)
+const supabaseUrl = 
+  import.meta.env.VITE_SUPABASE_URL || 
+  "https://roadqobsnjqtytjpqjuh.supabase.co";
+
+const supabaseAnonKey = 
+  import.meta.env.VITE_SUPABASE_ANON_KEY || 
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJvYWRxb2JzbmpxdHl0anBxanVoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTMwMjE4MDIsImV4cCI6MjEwODU5NzgwMn0.n-xGGsjiQG3buGCc51r2CJcxlvNiK_oQ1XrSGJ1LQW8";
 
 export const isConfigured = Boolean(
   supabaseUrl && 
