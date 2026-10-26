@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { 
   Lock, 
   User, 
@@ -23,7 +23,9 @@ import {
   KeyRound,
   Mail,
   Calendar,
-  Phone
+  Phone,
+  ChevronLeft,
+  ChevronRight
 } from "lucide-react";
 import InteractiveMap from "../components/InteractiveMap";
 import { 
@@ -72,6 +74,15 @@ export default function AdminPortal() {
   });
   const [savingEdit, setSavingEdit] = useState(false);
   const [actionNotice, setActionNotice] = useState("");
+
+  // Ref and helper for smooth horizontal table scrolling
+  const tableRef = useRef(null);
+  const scrollTable = (direction) => {
+    if (tableRef.current) {
+      const scrollAmount = direction === "left" ? -400 : 400;
+      tableRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
+    }
+  };
 
   // Check initial session & subscribe to auth changes
   useEffect(() => {
@@ -558,8 +569,35 @@ export default function AdminPortal() {
       ) : (
         /* Full Specifications Data Table */
         <div className="bento-island admin-table-island">
-        <div className="table-responsive">
-          <table className="admin-full-specs-table">
+          <div className="table-header-controls">
+            <div className="flex items-center gap-2">
+              <span className="font-extrabold text-sm text-zinc-900">Incident Specifications Table</span>
+              <span className="reference-pill">{filteredComplaints.length} records</span>
+            </div>
+            <div className="table-scroll-buttons">
+              <button 
+                type="button" 
+                className="scroll-nav-btn" 
+                onClick={() => scrollTable("left")} 
+                title="Scroll Table Left"
+              >
+                <ChevronLeft size={15} />
+                <span>Scroll Left</span>
+              </button>
+              <button 
+                type="button" 
+                className="scroll-nav-btn" 
+                onClick={() => scrollTable("right")} 
+                title="Scroll Table Right"
+              >
+                <span>Scroll Right</span>
+                <ChevronRight size={15} />
+              </button>
+            </div>
+          </div>
+
+          <div className="table-responsive" ref={tableRef}>
+            <table className="admin-full-specs-table">
             <thead>
               <tr>
                 <th>ID</th>

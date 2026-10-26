@@ -3,17 +3,34 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useScroll } from '@/components/ui/use-scroll';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
+import { getAdminSession, onAdminAuthStateChange } from '@/services/supabase';
 
 export function Header() {
   const location = useLocation();
   const [open, setOpen] = useState(false);
   const scrolled = useScroll(10);
+  const [session, setSession] = useState<any>(null);
 
   const links = [
     { label: 'Overview', href: '/' },
     { label: 'Report Defect', href: '/register-complaint' },
     { label: 'Track Status', href: '/track-complaint' },
   ];
+
+  // Supabase Auth listener to know if user is signed in
+  useEffect(() => {
+    async function checkAuth() {
+      const s = await getAdminSession();
+      setSession(s);
+    }
+    checkAuth();
+
+    const unsubscribe = onAdminAuthStateChange((_event, newSession) => {
+      setSession(newSession);
+    });
+
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (open) {
@@ -58,9 +75,13 @@ export function Header() {
 
         {/* Right: Desktop Action Buttons */}
         <div className="site-desktop-actions">
-          <Link to="/admin" className="site-btn-signin">
-            Sign In
-          </Link>
+          {/* Hide Sign In when signed in, show when not signed in */}
+          {!session && (
+            <Link to="/admin" className="site-btn-signin">
+              Sign In
+            </Link>
+          )}
+
           <Link to="/register-complaint" className="site-btn-cta">
             Report Defect
           </Link>
@@ -95,9 +116,11 @@ export function Header() {
             </div>
 
             <div className="site-mobile-actions-group">
-              <Link to="/admin" className="site-btn-signin w-full text-center" onClick={() => setOpen(false)}>
-                Admin Sign In
-              </Link>
+              {!session && (
+                <Link to="/admin" className="site-btn-signin w-full text-center" onClick={() => setOpen(false)}>
+                  Admin Sign In
+                </Link>
+              )}
               <Link to="/register-complaint" className="site-btn-cta w-full text-center" onClick={() => setOpen(false)}>
                 Report Defect
               </Link>
