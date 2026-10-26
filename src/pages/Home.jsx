@@ -1,149 +1,252 @@
-
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { 
+  Building2, 
+  PlusCircle, 
+  Search, 
+  ShieldCheck, 
+  Activity, 
+  MapPin, 
+  Sparkles, 
+  AlertCircle, 
+  CheckCircle2, 
+  Clock, 
+  ArrowRight,
+  TrendingUp,
+  Cpu,
+  Layers,
+  Database
+} from "lucide-react";
+import { fetchAllComplaints } from "../services/supabase";
+import GlowHorizonFM from "@/components/ui/glow-horizon";
 
 export default function Home() {
+  const [stats, setStats] = useState({
+    total: 0,
+    resolved: 0,
+    inProgress: 0,
+    critical: 0
+  });
+  const [recentComplaints, setRecentComplaints] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const { complaints } = await fetchAllComplaints();
+        const total = complaints.length;
+        const resolved = complaints.filter(c => c.status === "Resolved").length;
+        const inProgress = complaints.filter(c => c.status === "In Progress").length;
+        const critical = complaints.filter(c => c.severity === "Critical" || c.priority === "Immediate").length;
+
+        setStats({ total, resolved, inProgress, critical });
+        setRecentComplaints(complaints.slice(0, 4));
+      } catch (err) {
+        console.error("Failed to load home stats:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
   return (
-    <main className="welcome-page">
-      <div className="welcome-glow welcome-glow-one" />
-      <div className="welcome-glow welcome-glow-two" />
-
-      <header className="welcome-header">
-        <div className="welcome-brand">
-          <div className="welcome-brand-icon">
-            <svg
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.7"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M3 21h18" />
-              <path d="M5 21V8l7-5 7 5v13" />
-              <path d="M9 21v-6h6v6" />
-              <path d="M9 10h.01M15 10h.01" />
-            </svg>
-          </div>
-          <span>Municipal Services</span>
+    <div className="home-container">
+      {/* Hero Section with Cosmic Glow Horizon */}
+      <section className="hero-section">
+        <div className="hero-horizon-backdrop">
+          <GlowHorizonFM variant="top" />
         </div>
 
-        <span className="welcome-status">
-          <span className="welcome-status-dot" />
-          DIGITAL CIVIC SERVICES
-        </span>
-      </header>
-
-      <section className="welcome-main">
-        <div className="welcome-content">
-          <div className="welcome-eyebrow">
-            <span className="welcome-eyebrow-line" />
-            YOUR CITY, YOUR VOICE
-            <span className="welcome-eyebrow-line" />
-          </div>
-
-          <h1 className="welcome-title">
-            Municipal Complaint
-            <span>Analyzer</span>
-          </h1>
-
-          <p className="welcome-description">
-            A smarter way to report civic issues, track complaints,
-            and help build a better community.
-          </p>
-
-          <div className="welcome-divider">
-            <span />
-            <span />
-            <span />
-          </div>
-
-          <h2 className="welcome-prompt">Choose your portal</h2>
-          <p className="welcome-hint">
-            Select an option below to get started.
-          </p>
+        <div className="hero-badge">
+          <Sparkles size={14} className="text-blue-400" />
+          <span>Next-Gen Civic Governance • Powered by AI & Supabase</span>
         </div>
 
-        <div className="portal-grid">
-          <Link to="/citizen" className="portal-card citizen-card">
-            <div className="portal-card-top">
-              <div className="portal-icon citizen-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="12" cy="8" r="4" />
-                  <path d="M4 21v-2a8 8 0 0 1 16 0v2" />
-                </svg>
-              </div>
-              <span className="portal-number">01</span>
-            </div>
+        <h1 className="hero-headline">
+          Intelligent Municipal <br />
+          <span className="gradient-text">Complaint & Resolution System</span>
+        </h1>
 
-            <div className="portal-card-content">
-              <span className="portal-label">FOR THE PUBLIC</span>
-              <h3>Citizen Portal</h3>
-              <p>
-                Report a civic issue or follow the progress of
-                a complaint you have already submitted.
-              </p>
-            </div>
+        <p className="hero-subtext">
+          Report municipal issues with instant AI triage, automatic severity detection, 
+          real-time geolocation mapping, and complete status transparency backed by Supabase.
+        </p>
 
-            <div className="portal-card-footer">
-              <span>Enter citizen portal</span>
-              <span className="portal-arrow">↗</span>
-            </div>
+        <div className="hero-cta-group">
+          <Link to="/register-complaint" className="btn-primary-glow">
+            <PlusCircle size={18} />
+            <span>Report Civic Issue</span>
           </Link>
 
-          <Link to="/authority" className="portal-card authority-card">
-            <div className="portal-card-top">
-              <div className="portal-icon authority-icon">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.7"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M3 21h18" />
-                  <path d="M5 21V8l7-5 7 5v13" />
-                  <path d="M9 21v-6h6v6" />
-                  <path d="M9 10h.01M15 10h.01" />
-                </svg>
-              </div>
-              <span className="portal-number">02</span>
-            </div>
+          <Link to="/track-complaint" className="btn-secondary-glass">
+            <Search size={18} />
+            <span>Track by ID</span>
+          </Link>
 
-            <div className="portal-card-content">
-              <span className="portal-label">FOR MUNICIPAL STAFF</span>
-              <h3>Authority Portal</h3>
-              <p>
-                Review reported issues, manage complaint status,
-                and monitor civic service requests.
-              </p>
-            </div>
-
-            <div className="portal-card-footer">
-              <span>Enter authority portal</span>
-              <span className="portal-arrow">↗</span>
-            </div>
+          <Link to="/authority" className="btn-tertiary-link">
+            <ShieldCheck size={18} />
+            <span>Authority Portal →</span>
           </Link>
         </div>
 
-        <div className="welcome-bottom-note">
-          <span className="welcome-note-icon">✳</span>
-          <span>Every complaint is a step towards a better city.</span>
+        {/* Live Metrics Row */}
+        <div className="metrics-ribbon">
+          <div className="metric-box">
+            <div className="metric-icon-wrap bg-blue-500-10">
+              <Activity className="text-blue-400" size={20} />
+            </div>
+            <div className="metric-data">
+              <div className="metric-value">{stats.total || "—"}</div>
+              <div className="metric-label">Total Complaints Logged</div>
+            </div>
+          </div>
+
+          <div className="metric-box">
+            <div className="metric-icon-wrap bg-emerald-500-10">
+              <CheckCircle2 className="text-emerald-400" size={20} />
+            </div>
+            <div className="metric-data">
+              <div className="metric-value">{stats.resolved || "—"}</div>
+              <div className="metric-label">Resolved & Closed</div>
+            </div>
+          </div>
+
+          <div className="metric-box">
+            <div className="metric-icon-wrap bg-amber-500-10">
+              <Clock className="text-amber-400" size={20} />
+            </div>
+            <div className="metric-data">
+              <div className="metric-value">{stats.inProgress || "—"}</div>
+              <div className="metric-label">In Active Resolution</div>
+            </div>
+          </div>
+
+          <div className="metric-box">
+            <div className="metric-icon-wrap bg-rose-500-10">
+              <AlertCircle className="text-rose-400" size={20} />
+            </div>
+            <div className="metric-data">
+              <div className="metric-value">{stats.critical || "—"}</div>
+              <div className="metric-label">Critical / Urgent Triage</div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <footer className="welcome-footer">
-        <span>Municipal Complaint Analyzer</span>
-        <span className="footer-separator">•</span>
-        <span>Digital Civic Service Platform</span>
-      </footer>
-    </main>
+      {/* Feature Navigation Cards */}
+      <section className="portal-modules-section">
+        <div className="section-header">
+          <span className="section-tag">CIVIC ECOSYSTEM</span>
+          <h2>Designed for Citizens and Municipal Authorities</h2>
+          <p>Choose an operational module to interact with your city's public works network</p>
+        </div>
+
+        <div className="portal-cards-grid">
+          <Link to="/register-complaint" className="module-card">
+            <div className="module-card-icon citizen-theme">
+              <PlusCircle size={28} />
+            </div>
+            <div className="module-tag">PUBLIC PORTAL</div>
+            <h3>File a Complaint</h3>
+            <p>
+              Submit issues like broken roads, water leaks, or sparking transformers. 
+              Our real-time NLP instantly detects hazard severity without manual bureaucracy.
+            </p>
+            <div className="module-footer">
+              <span>Start Submission</span>
+              <ArrowRight size={16} />
+            </div>
+          </Link>
+
+          <Link to="/track-complaint" className="module-card">
+            <div className="module-card-icon tracking-theme">
+              <Search size={28} />
+            </div>
+            <div className="module-tag">TRANSPARENCY</div>
+            <h3>Live Progress Tracker</h3>
+            <p>
+              Check the exact workflow milestone of any complaint with your reference ID. 
+              View inspection notes, assigned department, and resolution timeline.
+            </p>
+            <div className="module-footer">
+              <span>Lookup Status</span>
+              <ArrowRight size={16} />
+            </div>
+          </Link>
+
+          <Link to="/authority" className="module-card">
+            <div className="module-card-icon authority-theme">
+              <ShieldCheck size={28} />
+            </div>
+            <div className="module-tag">OFFICIAL DISPATCH</div>
+            <h3>Authority Command Center</h3>
+            <p>
+              Geospatial heatmaps, automated priority queues, status updating, 
+              and department dispatching built for municipal ward officers and engineers.
+            </p>
+            <div className="module-footer">
+              <span>Launch Terminal</span>
+              <ArrowRight size={16} />
+            </div>
+          </Link>
+        </div>
+      </section>
+
+      {/* Live Public Issues Feed */}
+      <section className="recent-feed-section">
+        <div className="section-header">
+          <span className="section-tag">PUBLIC TRANSPARENCY</span>
+          <h2>Recent City Reports</h2>
+          <p>Real-time civic issues submitted across municipal wards</p>
+        </div>
+
+        <div className="recent-complaints-grid">
+          {recentComplaints.map((item) => (
+            <div key={item.id} className="feed-card">
+              <div className="feed-card-header">
+                <span className="feed-category">{item.category}</span>
+                <span className={`status-pill status-${(item.status || "submitted").toLowerCase().replace(/\s+/g, "-")}`}>
+                  {item.status}
+                </span>
+              </div>
+              <h4 className="feed-title">{item.title || item.description.slice(0, 50)}</h4>
+              <p className="feed-desc">{item.description.slice(0, 110)}...</p>
+              <div className="feed-meta">
+                <div className="feed-location">
+                  <MapPin size={13} />
+                  <span>{item.location}</span>
+                </div>
+                <div className="feed-severity">
+                  <span className={`priority-dot priority-${(item.severity || "medium").toLowerCase()}`} />
+                  <span>{item.severity}</span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* Technology Highlights */}
+      <section className="tech-banner">
+        <div className="tech-banner-inner">
+          <div className="tech-badge">
+            <Cpu size={16} />
+            <span>Modern Architecture</span>
+          </div>
+          <h3>Built on Supabase PostgreSQL & Serverless Edge</h3>
+          <p>
+            Eliminates brittle local file servers. Supports cloud database storage, 
+            instant image upload to Supabase Storage, and zero-config deployment to Vercel.
+          </p>
+          <div className="tech-chips">
+            <span className="tech-chip"><Database size={13} /> Supabase PostgreSQL</span>
+            <span className="tech-chip"><Sparkles size={13} /> Real-Time NLP Urgency Engine</span>
+            <span className="tech-chip"><Layers size={13} /> Leaflet Geospatial GIS</span>
+            <span className="tech-chip"><TrendingUp size={13} /> Vercel Serverless Ready</span>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 }

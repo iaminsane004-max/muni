@@ -1,112 +1,41 @@
-
-import {
-  BrowserRouter,
-  Routes,
-  Route,
-  Link,
-  useLocation,
-  Navigate,
-} from "react-router-dom";
-
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import RegisterComplaint from "./pages/RegisterComplaint";
 import TrackComplaint from "./pages/TrackComplaint";
-import AuthorityDashboard from "./AuthorityDashboard";
-import CitizenPortal from "./pages/CitizenPortal";
-
-import "./App.css";
-
-function Navigation() {
-  const location = useLocation();
-
-  return (
-    <nav className="navbar">
-      <Link to="/" className="navbar-brand">
-        AI Municipal Complaint Analyzer
-      </Link>
-
-      <div className="navbar-links">
-        <Link
-          to="/"
-          className={location.pathname === "/" ? "active" : ""}
-        >
-          Home
-        </Link>
-
-        <Link
-          to="/register-complaint"
-          className={
-            location.pathname === "/register-complaint"
-              ? "active"
-              : ""
-          }
-        >
-          Register Complaint
-        </Link>
-
-        <Link
-          to="/track-complaint"
-          className={
-            location.pathname === "/track-complaint"
-              ? "active"
-              : ""
-          }
-        >
-          Track Complaint
-        </Link>
-
-        <Link
-          to="/authority"
-          className={
-            location.pathname === "/authority"
-              ? "active"
-              : ""
-          }
-        >
-          Authority
-        </Link>
-      </div>
-    </nav>
-  );
-}
-
-function AppLayout() {
-  return (
-    <div className="app">
-
-      <Routes>
-        <Route path="/" element={<Home />} />
-
-        <Route
-          path="/register-complaint"
-          element={<RegisterComplaint />}
-        />
-
-        <Route
-          path="/track-complaint"
-          element={<TrackComplaint />}
-        />
-
-        <Route
-          path="/authority"
-          element={<AuthorityDashboard />}
-        />
-
-        <Route 
-          path="/citizen" 
-          element={<CitizenPortal />} 
-        />
-
-        <Route path="*" element={<Navigate to="/" replace />} />
-      </Routes>
-    </div>
-  );
-}
+import AuthorityDashboard from "./pages/AuthorityDashboard";
+import GlowHorizonDemo from "./components/ui/demo";
+import "./index.css";
 
 function App() {
   return (
     <BrowserRouter>
-      <AppLayout />
+      <div className="app-shell">
+        <Navbar />
+
+        <main className="main-content-viewport">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/demo" element={<GlowHorizonDemo />} />
+            <Route path="/register-complaint" element={<RegisterComplaint />} />
+            <Route path="/track-complaint" element={<TrackComplaint />} />
+            <Route path="/authority" element={<AuthorityDashboard />} />
+            <Route path="/citizen" element={<Navigate to="/register-complaint" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </main>
+
+        <footer className="site-footer">
+          <div className="footer-inner">
+            <div className="footer-left">
+              <strong>CivicPulse AI</strong> — Municipal Complaint & Public Infrastructure Triage
+            </div>
+            <div className="footer-right">
+              <span>Backed by Supabase PostgreSQL</span>
+            </div>
+          </div>
+        </footer>
+      </div>
     </BrowserRouter>
   );
 }

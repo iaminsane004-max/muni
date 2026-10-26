@@ -28,6 +28,7 @@ dist-ssr
 .venv/
 venv/
 backend/.venv/
+backend_copy/
 
 # Python cache
 __pycache__/

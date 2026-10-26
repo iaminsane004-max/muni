@@ -1,173 +1,270 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useSearchParams, Link } from "react-router-dom";
+import { 
+  Search, 
+  MapPin, 
+  Clock, 
+  CheckCircle2, 
+  AlertCircle, 
+  Building2, 
+  ShieldAlert, 
+  ArrowRight,
+  Sparkles,
+  Calendar,
+  FileText
+} from "lucide-react";
+import InteractiveMap from "../components/InteractiveMap";
+import { fetchComplaintById } from "../services/supabase";
 
-function TrackComplaint() {
-  const [complaintId, setComplaintId] = useState("");
+export default function TrackComplaint() {
+  const [searchParams] = useSearchParams();
+  const queryId = searchParams.get("id") || "";
+
+  const [complaintId, setComplaintId] = useState(queryId);
   const [complaint, setComplaint] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    const id = complaintId.trim();
-
-    if (!id) return;
+  const handleLookup = async (idToSearch) => {
+    const target = (idToSearch || complaintId).trim();
+    if (!target) return;
 
     setLoading(true);
-    setComplaint(null);
     setError("");
+    setComplaint(null);
 
     try {
-      const response = await fetch(
-        `http://127.0.0.1:5000/api/complaints/${encodeURIComponent(id)}`
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Unable to find this complaint."
-        );
+      const data = await fetchComplaintById(target);
+      if (!data) {
+        setError(`No complaint found with Reference ID "${target}". Please verify the code and try again.`);
+      } else {
+        setComplaint(data);
       }
-
-      setComplaint(data);
     } catch (err) {
-      setError(
-        err.message ||
-          "Could not connect to the server. Please try again."
-      );
+      console.error("Lookup error:", err);
+      setError("An error occurred while fetching complaint data.");
     } finally {
       setLoading(false);
     }
   };
 
-  const formatStatus = (status) => {
-    if (typeof status === "string" && status.trim()) {
-      return status
-        .replace(/[_-]/g, " ")
-        .replace(/\b\w/g, (char) => char.toUpperCase());
+  useEffect(() => {
+    if (queryId) {
+      setComplaintId(queryId);
+      handleLookup(queryId);
+    }
+  }, [queryId]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    handleLookup(complaintId);
+  };
+
+  const getTimelineSteps = (status) => {
+    const normalized = (status || "Submitted").toLowerCase();
+    
+    if (normalized === "rejected") {
+      return [
+        { label: "Submitted", done: true },
+        { label: "AI Triaged", done: true },
+        { label: "Review Completed", done: true },
+        { label: "Rejected / Duplicate", done: true, isRejected: true }
+      ];
     }
 
-    return "Submitted";
+    return [
+      { label: "Submitted", done: true },
+      { label: "AI Triage & Classification", done: true },
+      { label: "Department In Action", done: normalized === "in progress" || normalized === "resolved" },
+      { label: "Verified & Resolved", done: normalized === "resolved" }
+    ];
   };
 
   return (
-    <div className="track-page">
-      <section className="page-intro">
-        <p className="page-eyebrow">COMPLAINT SERVICES</p>
-        <h1>Track Your Complaint</h1>
-        <p>
-          Follow up on a civic issue using the complaint
-          reference ID you received after submission.
-        </p>
-      </section>
-
-      <main className="tracking-page-container">
-        <div className="tracking-icon">
-          <span>01</span>
+    <div className="track-container">
+      <div className="page-header-block">
+        <div className="header-tag">
+          <Search size={14} className="text-blue-400" />
+          <span>CIVIC STATUS TRACKER</span>
         </div>
+        <h1>Track Your Complaint Progress</h1>
+        <p>Enter your unique Reference ID to check live inspection milestones and official responses</p>
+      </div>
 
-        <h2>Check Complaint Status</h2>
-
-        <p className="tracking-description">
-          Enter your complaint reference ID below to look up
-          its current status.
-        </p>
-
-        <form
-          className="tracking-page-form"
-          onSubmit={handleSubmit}
-        >
-          <label htmlFor="complaintId">
-            Complaint Reference ID
-          </label>
-
-          <input
-            type="text"
-            id="complaintId"
-            name="complaintId"
-            placeholder="e.g. CMP-20261014-1234"
-            value={complaintId}
-            onChange={(event) =>
-              setComplaintId(event.target.value)
-            }
-            required
-          />
-
-          <button type="submit" disabled={loading}>
-            {loading ? "Checking..." : "Check Status"}
+      {/* Search Bar */}
+      <div className="track-search-card">
+        <form onSubmit={handleSubmit} className="track-search-form">
+          <div className="search-input-wrap">
+            <Search className="search-icon" size={20} />
+            <input 
+              type="text" 
+              placeholder="E.g. CMP-20261026-8801" 
+              value={complaintId}
+              onChange={(e) => setComplaintId(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="track-submit-btn" disabled={loading}>
+            {loading ? "Searching..." : "Track Status"}
           </button>
         </form>
 
-        {error && (
-          <div className="tracking-result tracking-error" role="alert">
-            <h3>Complaint Not Found</h3>
-            <p>{error}</p>
-            <p>Please check your reference ID and try again.</p>
+        <div className="quick-suggestions">
+          <span className="text-xs text-slate-400">Sample Reference IDs:</span>
+          {["CMP-20261026-8801", "CMP-20261026-6412", "CMP-20261025-3319"].map((sampleId) => (
+            <button 
+              key={sampleId} 
+              type="button" 
+              className="sample-id-chip"
+              onClick={() => {
+                setComplaintId(sampleId);
+                handleLookup(sampleId);
+              }}
+            >
+              {sampleId}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {error && (
+        <div className="error-alert-banner">
+          <AlertCircle size={18} />
+          <span>{error}</span>
+        </div>
+      )}
+
+      {/* Complaint Details Card */}
+      {complaint && (
+        <div className="tracker-result-wrapper">
+          {/* Milestone Stepper */}
+          <div className="milestone-timeline-card">
+            <h3>Lifecycle Milestones</h3>
+            <div className="stepper-track">
+              {getTimelineSteps(complaint.status).map((step, idx) => (
+                <div key={idx} className={`stepper-node ${step.done ? "completed" : "pending"} ${step.isRejected ? "rejected" : ""}`}>
+                  <div className="stepper-dot">
+                    {step.done ? <CheckCircle2 size={16} /> : idx + 1}
+                  </div>
+                  <span className="stepper-label">{step.label}</span>
+                </div>
+              ))}
+            </div>
           </div>
-        )}
 
-        {complaint && (
-          <div className="tracking-result tracking-success">
-            <h3>Complaint Details</h3>
+          <div className="complaint-detail-grid">
+            {/* Left Column: Complaint Info */}
+            <div className="complaint-info-col">
+              <div className="info-card">
+                <div className="info-card-header">
+                  <div>
+                    <span className="reference-pill">{complaint.id}</span>
+                    <h2 className="info-title">{complaint.title || complaint.description.slice(0, 50)}</h2>
+                  </div>
+                  <span className={`status-pill status-${(complaint.status || "submitted").toLowerCase().replace(/\s+/g, "-")}`}>
+                    {complaint.status}
+                  </span>
+                </div>
 
-            <p>
-              <strong>Reference ID:</strong>{" "}
-              {complaint.id}
-            </p>
+                <div className="meta-badges-row">
+                  <span className="meta-badge category">{complaint.category}</span>
+                  <span className={`meta-badge severity-${(complaint.severity || "medium").toLowerCase()}`}>
+                    {complaint.severity} Severity
+                  </span>
+                  <span className="meta-badge priority">
+                    {complaint.priority} Priority
+                  </span>
+                </div>
 
-            <p>
-              <strong>Status:</strong>{" "}
-              <span className="tracking-status">
-                {formatStatus(complaint.status)}
-              </span>
-            </p>
+                <div className="description-box">
+                  <h4>Citizen Description:</h4>
+                  <p>{complaint.description}</p>
+                </div>
 
-            <p>
-              <strong>Description:</strong>{" "}
-              {complaint.description || "Not available"}
-            </p>
+                {complaint.urgency_reasons && complaint.urgency_reasons.length > 0 && (
+                  <div className="urgency-factors-box">
+                    <div className="urgency-title">
+                      <ShieldAlert size={14} className="text-amber-400" />
+                      <span>AI Triage Urgency Triggers:</span>
+                    </div>
+                    <ul className="urgency-list">
+                      {complaint.urgency_reasons.map((r, i) => (
+                        <li key={i}>{r}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
 
-            <p>
-              <strong>Location:</strong>{" "}
-              {complaint.location || "Not available"}
-            </p>
+                {/* Authority Update */}
+                <div className="authority-update-box">
+                  <div className="auth-box-header">
+                    <Building2 size={16} className="text-blue-400" />
+                    <strong>Official Action & Department Remarks</strong>
+                  </div>
+                  <div className="auth-dept-tag">
+                    Department: <span>{complaint.department || "Municipal Public Works"}</span>
+                  </div>
+                  <p className="auth-notes-text">
+                    {complaint.official_notes || "Awaiting initial site inspection report from zonal office."}
+                  </p>
+                  <div className="auth-time-stamp">
+                    <Clock size={12} />
+                    <span>Last Updated: {new Date(complaint.updated_at || complaint.created_at).toLocaleString()}</span>
+                  </div>
+                </div>
 
-            <p>
-              <strong>Date Submitted:</strong>{" "}
-              {complaint.date || "Not available"}
-            </p>
+                {complaint.image_url && (
+                  <div className="evidence-section">
+                    <h4>Uploaded Photographic Evidence:</h4>
+                    <img 
+                      src={complaint.image_url} 
+                      alt="Complaint Evidence" 
+                      className="evidence-display-img"
+                    />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Right Column: Geolocation Map */}
+            <div className="complaint-map-col">
+              <div className="info-card">
+                <h3>Incident Location</h3>
+                <div className="location-address-box">
+                  <MapPin size={16} className="text-rose-400 flex-shrink-0" />
+                  <span>{complaint.location}</span>
+                </div>
+
+                {complaint.latitude && complaint.longitude ? (
+                  <div className="detail-map-wrapper">
+                    <InteractiveMap 
+                      center={[Number(complaint.latitude), Number(complaint.longitude)]}
+                      zoom={15}
+                      selectedPosition={[Number(complaint.latitude), Number(complaint.longitude)]}
+                      height="300px"
+                    />
+                  </div>
+                ) : (
+                  <div className="no-coords-notice">
+                    No precise GPS coordinates were attached to this report.
+                  </div>
+                )}
+
+                <div className="tracking-summary-footer">
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <Calendar size={13} />
+                    <span>Logged on: {new Date(complaint.created_at).toLocaleDateString()}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs text-slate-400">
+                    <FileText size={13} />
+                    <span>Reported by: {complaint.citizen_name || "Anonymous"}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
-
-        <div className="tracking-help">
-          <h3>Where can I find my complaint ID?</h3>
-          <p>
-            Your reference ID is displayed after a complaint
-            is submitted successfully. Keep it safe for future
-            status enquiries.
-          </p>
         </div>
-
-        <div className="tracking-register-link">
-          <span>Haven't reported an issue yet?</span>
-          <Link to="/register-complaint">
-            Register a new complaint
-          </Link>
-        </div>
-      </main>
-
-      <footer className="home-footer">
-        <div>
-          <strong>AI Municipal Complaint Analyzer</strong>
-          <p>Working towards better municipal services.</p>
-        </div>
-
-        <Link to="/">Back to Home</Link>
-      </footer>
+      )}
     </div>
   );
 }
-
-export default TrackComplaint;

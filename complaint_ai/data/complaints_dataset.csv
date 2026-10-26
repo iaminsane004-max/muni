@@ -1,0 +1,160 @@
+complaint_text,category,severity,priority
+"Exposed electrical wiring near the school gate, children are at risk.",Electricity,High,Urgent
+"Road collapsed after heavy rain, vehicles cannot pass safely.",Roads & Potholes,High,Urgent
+Garbage burning near the school is causing severe air pollution.,Garbage & Sanitation,High,Urgent
+Power went out for ten minutes this morning.,Electricity,Low,Low
+Drain water is slightly slow to flow after rain.,Sewage / Drainage,Low,Low
+Deep pothole on the highway has caused two accidents this week.,Roads & Potholes,High,Urgent
+"No streetlights on the road near the school, unsafe for children walking home.",Streetlight,High,Urgent
+Several streetlights in our area have not worked for two weeks.,Streetlight,Medium,Medium
+Dark unlit stretch of road has become a safety risk for women at night.,Streetlight,High,Urgent
+Small pothole forming near the bus stop.,Roads & Potholes,Low,Low
+"No water supply for the whole ward for five days, residents are in distress.",Water Supply,High,Urgent
+One streetlight bulb needs replacement on our lane.,Streetlight,Low,Low
+Sewage is overflowing into homes after the drain collapsed.,Sewage / Drainage,High,Urgent
+Muddy water is coming from the tap since yesterday.,Water Supply,Medium,Medium
+A few stray plastic bags left near the collection point.,Garbage & Sanitation,Low,Low
+Garbage burning near the school is causing severe air pollution.,Garbage & Sanitation,High,Urgent
+Water pressure has been slightly low in our area for two days.,Water Supply,Low,Low
+Water tanker has not come to our area for a week.,Water Supply,Medium,Medium
+Power supply has been unstable since last week's storm.,Electricity,Medium,Medium
+One streetlight bulb needs replacement on our lane.,Streetlight,Low,Low
+Streetlight flickers occasionally near our lane.,Electricity,Low,Low
+A minor crack has appeared on the footpath.,Roads & Potholes,Low,Low
+Entire street is dark at night because streetlights are not functioning.,Streetlight,Medium,Medium
+Garbage collection was a day late this week.,Garbage & Sanitation,Low,Low
+Water pressure has been slightly low in our area for two days.,Water Supply,Low,Low
+Muddy water is coming from the tap since yesterday.,Water Supply,Medium,Medium
+Large pothole on the main road is damaging vehicles.,Roads & Potholes,Medium,Medium
+Minor blockage in the drain near our gate.,Sewage / Drainage,Low,Low
+Small pothole forming near the bus stop.,Roads & Potholes,Low,Low
+Open manhole on the main road is a serious accident risk.,Sewage / Drainage,High,Urgent
+Open manhole on the main road is a serious accident risk.,Sewage / Drainage,High,Urgent
+Drain water is slightly slow to flow after rain.,Sewage / Drainage,Low,Low
+"Waste is piling up near the market area, causing bad smell.",Garbage & Sanitation,Medium,Medium
+"Tap water tastes a bit different than usual, please check.",Water Supply,Low,Low
+Public dustbin near the park is almost full.,Garbage & Sanitation,Low,Low
+"A live electric wire has fallen on the road, extremely dangerous.",Electricity,High,Urgent
+"No water supply for the whole ward for five days, residents are in distress.",Water Supply,High,Urgent
+Large pothole on the main road is damaging vehicles.,Roads & Potholes,Medium,Medium
+No water supply in our street for the past two days.,Water Supply,Medium,Medium
+"Drain has been blocked for a week, water is stagnating on the road.",Sewage / Drainage,Medium,Medium
+Power supply has been unstable since last week's storm.,Electricity,Medium,Medium
+Power went out for ten minutes this morning.,Electricity,Low,Low
+"Sparking electric pole after the rain, urgent action needed.",Electricity,High,Urgent
+A few stray plastic bags left near the collection point.,Garbage & Sanitation,Low,Low
+Transformer near our house is making a loud humming noise.,Electricity,Medium,Medium
+"Sparking electric pole after the rain, urgent action needed.",Electricity,High,Urgent
+Large crater in the road is invisible at night and extremely dangerous.,Roads & Potholes,High,Urgent
+Huge pile of uncollected garbage is rotting and causing disease risk.,Garbage & Sanitation,High,Urgent
+"Sparking electric pole after the rain, urgent action needed.",Electricity,High,Urgent
+Water tanker has not come to our area for a week.,Water Supply,Medium,Medium
+Uneven road surface is causing traffic slowdowns during peak hours.,Roads & Potholes,Medium,Medium
+Road markings have faded on the main street.,Roads & Potholes,Low,Low
+Drain water is slightly slow to flow after rain.,Sewage / Drainage,Low,Low
+A major water pipeline has burst and is flooding the entire street.,Water Supply,High,Urgent
+Road has not been repaired despite several complaints last month.,Roads & Potholes,Medium,Medium
+Garbage has not been collected from our street for four days.,Garbage & Sanitation,Medium,Medium
+No water supply in our street for the past two days.,Water Supply,Medium,Medium
+Garbage has not been collected from our street for four days.,Garbage & Sanitation,Medium,Medium
+Several streetlights in our area have not worked for two weeks.,Streetlight,Medium,Medium
+Minor blockage in the drain near our gate.,Sewage / Drainage,Low,Low
+Streetlight flickers occasionally near our lane.,Electricity,Low,Low
+"Exposed electrical wiring near the school gate, children are at risk.",Electricity,High,Urgent
+Large crater in the road is invisible at night and extremely dangerous.,Roads & Potholes,High,Urgent
+"Sewage water is mixing with drinking water supply, urgent health risk.",Water Supply,High,Urgent
+Public dustbin near the park is almost full.,Garbage & Sanitation,Low,Low
+A minor crack has appeared on the footpath.,Roads & Potholes,Low,Low
+Power supply has been unstable since last week's storm.,Electricity,Medium,Medium
+"No streetlights on the road near the school, unsafe for children walking home.",Streetlight,High,Urgent
+"Tap water tastes a bit different than usual, please check.",Water Supply,Low,Low
+Garbage collection was a day late this week.,Garbage & Sanitation,Low,Low
+Open drain near the market is overflowing during rains.,Sewage / Drainage,Medium,Medium
+Minor voltage fluctuation reported in the evening.,Electricity,Low,Low
+"Stagnant sewage water has become a breeding ground for mosquitoes, dengue risk rising.",Sewage / Drainage,High,Urgent
+Entire street is dark at night because streetlights are not functioning.,Streetlight,Medium,Medium
+Public dustbin near the park is almost full.,Garbage & Sanitation,Low,Low
+Medical waste has been dumped illegally near residential homes.,Garbage & Sanitation,High,Urgent
+"Drain has been blocked for a week, water is stagnating on the road.",Sewage / Drainage,Medium,Medium
+"Road collapsed after heavy rain, vehicles cannot pass safely.",Roads & Potholes,High,Urgent
+"No water supply for the whole ward for five days, residents are in distress.",Water Supply,High,Urgent
+Dark unlit stretch of road has become a safety risk for women at night.,Streetlight,High,Urgent
+Water supply pipe is leaking continuously near the main road.,Water Supply,Medium,Medium
+One streetlight bulb needs replacement on our lane.,Streetlight,Low,Low
+Minor leakage near the water meter outside our house.,Water Supply,Low,Low
+Uneven road surface is causing traffic slowdowns during peak hours.,Roads & Potholes,Medium,Medium
+Contaminated water is causing stomach illness in several households.,Water Supply,High,Urgent
+Several streetlights in our area have not worked for two weeks.,Streetlight,Medium,Medium
+Streetlight takes a while to turn on at dusk.,Streetlight,Low,Low
+Frequent power cuts in our area for the last three days.,Electricity,Medium,Medium
+Muddy water is coming from the tap since yesterday.,Water Supply,Medium,Medium
+Overflowing dustbins are attracting stray animals.,Garbage & Sanitation,Medium,Medium
+Uneven road surface is causing traffic slowdowns during peak hours.,Roads & Potholes,Medium,Medium
+Medical waste has been dumped illegally near residential homes.,Garbage & Sanitation,High,Urgent
+Open manhole on the main road is a serious accident risk.,Sewage / Drainage,High,Urgent
+Huge pile of uncollected garbage is rotting and causing disease risk.,Garbage & Sanitation,High,Urgent
+Streetlight takes a while to turn on at dusk.,Streetlight,Low,Low
+A few stray plastic bags left near the collection point.,Garbage & Sanitation,Low,Low
+Huge pile of uncollected garbage is rotting and causing disease risk.,Garbage & Sanitation,High,Urgent
+"Waste is piling up near the market area, causing bad smell.",Garbage & Sanitation,Medium,Medium
+"Sewage water is mixing with drinking water supply, urgent health risk.",Water Supply,High,Urgent
+Deep pothole on the highway has caused two accidents this week.,Roads & Potholes,High,Urgent
+Garbage burning near the school is causing severe air pollution.,Garbage & Sanitation,High,Urgent
+Open drain near the market is overflowing during rains.,Sewage / Drainage,Medium,Medium
+Large crater in the road is invisible at night and extremely dangerous.,Roads & Potholes,High,Urgent
+A major water pipeline has burst and is flooding the entire street.,Water Supply,High,Urgent
+A minor crack has appeared on the footpath.,Roads & Potholes,Low,Low
+Frequent power cuts in our area for the last three days.,Electricity,Medium,Medium
+Road has not been repaired despite several complaints last month.,Roads & Potholes,Medium,Medium
+Road has not been repaired despite several complaints last month.,Roads & Potholes,Medium,Medium
+Overflowing dustbins are attracting stray animals.,Garbage & Sanitation,Medium,Medium
+Streetlight flickers occasionally near our lane.,Electricity,Low,Low
+"Stagnant sewage water has become a breeding ground for mosquitoes, dengue risk rising.",Sewage / Drainage,High,Urgent
+Minor leakage near the water meter outside our house.,Water Supply,Low,Low
+Streetlight takes a while to turn on at dusk.,Streetlight,Low,Low
+Water tanker has not come to our area for a week.,Water Supply,Medium,Medium
+Small pothole forming near the bus stop.,Roads & Potholes,Low,Low
+"Transformer caught fire near the residential area, people are panicking.",Electricity,High,Urgent
+Garbage collection was a day late this week.,Garbage & Sanitation,Low,Low
+"Tap water tastes a bit different than usual, please check.",Water Supply,Low,Low
+Garbage has not been collected from our street for four days.,Garbage & Sanitation,Medium,Medium
+Contaminated water is causing stomach illness in several households.,Water Supply,High,Urgent
+Large pothole on the main road is damaging vehicles.,Roads & Potholes,Medium,Medium
+Power went out for ten minutes this morning.,Electricity,Low,Low
+"No streetlights on the road near the school, unsafe for children walking home.",Streetlight,High,Urgent
+Frequent power cuts in our area for the last three days.,Electricity,Medium,Medium
+No water supply in our street for the past two days.,Water Supply,Medium,Medium
+Transformer near our house is making a loud humming noise.,Electricity,Medium,Medium
+Minor leakage near the water meter outside our house.,Water Supply,Low,Low
+Sewage is overflowing into homes after the drain collapsed.,Sewage / Drainage,High,Urgent
+Deep pothole on the highway has caused two accidents this week.,Roads & Potholes,High,Urgent
+"Drain has been blocked for a week, water is stagnating on the road.",Sewage / Drainage,Medium,Medium
+Minor voltage fluctuation reported in the evening.,Electricity,Low,Low
+Dark unlit stretch of road has become a safety risk for women at night.,Streetlight,High,Urgent
+"Road collapsed after heavy rain, vehicles cannot pass safely.",Roads & Potholes,High,Urgent
+Open drain near the market is overflowing during rains.,Sewage / Drainage,Medium,Medium
+Minor voltage fluctuation reported in the evening.,Electricity,Low,Low
+Water pressure has been slightly low in our area for two days.,Water Supply,Low,Low
+Road markings have faded on the main street.,Roads & Potholes,Low,Low
+Medical waste has been dumped illegally near residential homes.,Garbage & Sanitation,High,Urgent
+"A live electric wire has fallen on the road, extremely dangerous.",Electricity,High,Urgent
+Overflowing dustbins are attracting stray animals.,Garbage & Sanitation,Medium,Medium
+Sewage is overflowing into homes after the drain collapsed.,Sewage / Drainage,High,Urgent
+Transformer near our house is making a loud humming noise.,Electricity,Medium,Medium
+"Stagnant sewage water has become a breeding ground for mosquitoes, dengue risk rising.",Sewage / Drainage,High,Urgent
+Entire street is dark at night because streetlights are not functioning.,Streetlight,Medium,Medium
+"Transformer caught fire near the residential area, people are panicking.",Electricity,High,Urgent
+"A live electric wire has fallen on the road, extremely dangerous.",Electricity,High,Urgent
+Water supply pipe is leaking continuously near the main road.,Water Supply,Medium,Medium
+Water supply timing has shifted by half an hour this week.,Water Supply,Low,Low
+Water supply timing has shifted by half an hour this week.,Water Supply,Low,Low
+"Waste is piling up near the market area, causing bad smell.",Garbage & Sanitation,Medium,Medium
+Water supply pipe is leaking continuously near the main road.,Water Supply,Medium,Medium
+Minor blockage in the drain near our gate.,Sewage / Drainage,Low,Low
+A major water pipeline has burst and is flooding the entire street.,Water Supply,High,Urgent
+Contaminated water is causing stomach illness in several households.,Water Supply,High,Urgent
+"Transformer caught fire near the residential area, people are panicking.",Electricity,High,Urgent
+"Exposed electrical wiring near the school gate, children are at risk.",Electricity,High,Urgent
+Road markings have faded on the main street.,Roads & Potholes,Low,Low
+Water supply timing has shifted by half an hour this week.,Water Supply,Low,Low
+"Sewage water is mixing with drinking water supply, urgent health risk.",Water Supply,High,Urgent
