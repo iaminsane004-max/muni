@@ -5,7 +5,7 @@ import RegisterComplaint from "./pages/RegisterComplaint";
 import TrackComplaint from "./pages/TrackComplaint";
 import AuthorityDashboard from "./pages/AuthorityDashboard";
 import AdminPortal from "./pages/AdminPortal";
-import GlowHorizonDemo from "./components/ui/demo";
+import Demo from "./components/ui/demo";
 import "./index.css";
 
 function App() {
@@ -17,7 +17,8 @@ function App() {
         <main className="main-content-viewport">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/demo" element={<GlowHorizonDemo />} />
+            <Route path="/demo" element={<Demo />} />
+            <Route path="/header-demo" element={<Demo />} />
             <Route path="/register-complaint" element={<RegisterComplaint />} />
             <Route path="/track-complaint" element={<TrackComplaint />} />
             <Route path="/authority" element={<AuthorityDashboard />} />

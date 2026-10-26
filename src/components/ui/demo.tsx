@@ -1,13 +1,30 @@
-import GlowHorizonFM from "@/components/ui/glow-horizon";
-import { AnimatedTitleFM } from "@/components/ui/glow-horizon-utils/animated-title-fm";
+import React from 'react';
+import { Header } from "@/components/ui/header-2";
 
-export default function GlowHorizonDemo() {
-  return (
-    <div style={{ width: "100%", height: "100vh", position: "relative", overflow: "hidden", background: "#050507" }}>
-      <GlowHorizonFM variant="top" />
-      <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-        <AnimatedTitleFM open={true} />
-      </div>
-    </div>
-  );
+export default function Demo() {
+	return (
+		<div className="w-full">
+			<Header />
+
+			<main className="mx-auto min-h-screen w-full max-w-3xl px-4 py-12">
+				<div  className="space-y-2 mb-4">
+					<div className="bg-accent h-6 w-4/6 rounded-md border" />
+					<div className="bg-accent h-6 w-1/2 rounded-md border" />
+				</div>
+				<div  className="flex gap-2 mb-8">
+					<div className="bg-accent h-3 w-14 rounded-md border" />
+					<div className="bg-accent h-3 w-12 rounded-md border" />
+				</div>
+
+				{Array.from({ length: 7 }).map((_, i) => (
+					<div key={i} className="space-y-2 mb-8">
+						<div className="bg-accent h-4 w-full rounded-md border" />
+						<div className="bg-accent h-4 w-full rounded-md border" />
+						<div className="bg-accent h-4 w-full rounded-md border" />
+						<div className="bg-accent h-4 w-1/2 rounded-md border" />
+					</div>
+				))}
+			</main>
+		</div>
+	);
 }
