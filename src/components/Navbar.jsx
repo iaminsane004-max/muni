@@ -1,24 +1,14 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
-  Copy, 
-  Check, 
   ArrowUpRight, 
   Menu, 
-  X,
-  ShieldCheck
+  X
 } from "lucide-react";
 
 export default function Navbar() {
   const location = useLocation();
-  const [copied, setCopied] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-
-  const handleCopyEmail = () => {
-    navigator.clipboard.writeText("support@civicpulse.city");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
 
   const navLinks = [
     { to: "/", label: "Overview" },
@@ -30,23 +20,11 @@ export default function Navbar() {
   return (
     <header className="minimal-nav-container">
       <div className="minimal-nav-bar">
-        {/* Left: Email / Contact Pill with Copy button */}
-        <div className="nav-left-pill-group">
-          <span className="nav-email-text">civic.triage@city.gov</span>
-          <button 
-            type="button" 
-            className="nav-tiny-pill-btn" 
-            onClick={handleCopyEmail}
-            title="Copy Civic Email"
-          >
-            {copied ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} />}
-            <span>{copied ? "Copied" : "Copy"}</span>
-          </button>
-          <span className="nav-status-badge">
-            <span className="status-dot-green" />
-            <span>AI Active</span>
-          </span>
-        </div>
+        {/* Left: Brand Logo */}
+        <Link to="/" className="nav-brand-logo">
+          <span className="nav-brand-dot" />
+          <span className="nav-brand-text">CivicPulse</span>
+        </Link>
 
         {/* Center: Clean Text Navigation */}
         <nav className="nav-center-links">

@@ -108,58 +108,33 @@ body {
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
 }
 
-.nav-left-pill-group {
+.nav-brand-logo {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
-}
-
-.nav-email-text {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: var(--text-dark);
-  font-family: var(--font-mono);
-}
-
-.nav-tiny-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-  background: #f4f4f5;
-  border: 1px solid #e4e4e7;
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
+  gap: 0.55rem;
+  text-decoration: none;
+  padding: 0.2rem 0.6rem;
   border-radius: 9999px;
-  cursor: pointer;
   transition: all 0.2s ease;
 }
 
-.nav-tiny-pill-btn:hover {
-  background: #e4e4e7;
-  color: var(--text-black);
+.nav-brand-logo:hover {
+  opacity: 0.8;
 }
 
-.nav-status-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: #f4f4f5;
-  border: 1px solid #e4e4e7;
-  color: var(--text-muted);
-  font-size: 0.72rem;
-  font-weight: 600;
-  padding: 0.2rem 0.55rem;
-  border-radius: 9999px;
-}
-
-.status-dot-green {
-  width: 6px;
-  height: 6px;
+.nav-brand-dot {
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: var(--accent-green);
-  box-shadow: 0 0 6px var(--accent-green);
+  background: #111111;
+  display: inline-block;
+}
+
+.nav-brand-text {
+  font-size: 1.05rem;
+  font-weight: 850;
+  letter-spacing: -0.03em;
+  color: #111111;
 }
 
 .nav-center-links {
