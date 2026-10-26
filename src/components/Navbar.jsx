@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
-  Building2, 
-  PlusCircle, 
+  Leaf, 
   Search, 
   ShieldCheck, 
+  PlusCircle, 
   Menu, 
-  X
+  X,
+  Lock
 } from "lucide-react";
 
 export default function Navbar() {
@@ -14,77 +15,79 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navLinks = [
-    { to: "/", label: "Overview", icon: Building2 },
-    { to: "/register-complaint", label: "Report Issue", icon: PlusCircle },
-    { to: "/track-complaint", label: "Track Status", icon: Search },
-    { to: "/authority", label: "Authority Command", icon: ShieldCheck },
+    { to: "/", label: "Home" },
+    { to: "/register-complaint", label: "Report Issue" },
+    { to: "/track-complaint", label: "Track Status" },
+    { to: "/authority", label: "Authority Council" },
   ];
 
   return (
-    <header className="site-navbar">
-      <div className="navbar-inner">
-        <Link to="/" className="brand-badge">
-          <div className="brand-logo-glow">
-            <Building2 className="brand-logo-icon" size={22} />
-          </div>
-          <div className="brand-text-block">
-            <div className="brand-title">
-              CivicPulse <span className="brand-ai-tag">AI</span>
-            </div>
-            <div className="brand-subtitle">Municipal Complaint & Triage Engine</div>
-          </div>
+    <header className="eco-navbar-wrap">
+      <nav className="eco-navbar">
+        {/* Brand Logo */}
+        <Link to="/" className="eco-brand">
+          <span className="eco-brand-name">Poulls<span className="brand-dot">.</span></span>
+          <span className="eco-brand-sub">CivicPulse</span>
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="desktop-links">
+        {/* Center Links */}
+        <div className="eco-nav-links">
           {navLinks.map((item) => {
-            const Icon = item.icon;
             const active = location.pathname === item.to;
             return (
               <Link 
                 key={item.to} 
                 to={item.to} 
-                className={`nav-link-item ${active ? "active" : ""}`}
+                className={`eco-nav-item ${active ? "active" : ""}`}
               >
-                <Icon size={16} />
-                <span>{item.label}</span>
+                {item.label}
               </Link>
             );
           })}
-        </nav>
+        </div>
 
-        {/* Mobile Toggle */}
-        <div className="navbar-actions">
+        {/* Right Actions */}
+        <div className="eco-nav-actions">
+          <Link to="/track-complaint" className="eco-search-btn" title="Search Complaint">
+            <Search size={16} />
+          </Link>
+
+          <Link to="/authority" className="eco-pill-btn">
+            <Lock size={13} />
+            <span>Council Portal</span>
+          </Link>
+
           <button 
-            className="mobile-toggle-btn"
+            className="eco-mobile-toggle"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle Navigation"
           >
-            {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
+            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </div>
+      </nav>
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="mobile-nav-drawer">
-          <div className="mobile-links-list">
-            {navLinks.map((item) => {
-              const Icon = item.icon;
-              const active = location.pathname === item.to;
-              return (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  className={`mobile-nav-item ${active ? "active" : ""}`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <Icon size={18} />
-                  <span>{item.label}</span>
-                </Link>
-              );
-            })}
-          </div>
+        <div className="eco-mobile-drawer">
+          {navLinks.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              className={`eco-mobile-item ${location.pathname === item.to ? "active" : ""}`}
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/register-complaint"
+            className="eco-mobile-pill-btn"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            <PlusCircle size={16} />
+            <span>Report Civic Defect</span>
+          </Link>
         </div>
       )}
     </header>
