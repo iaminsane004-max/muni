@@ -1,92 +1,106 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { 
-  Leaf, 
-  Search, 
-  ShieldCheck, 
-  PlusCircle, 
+  Copy, 
+  Check, 
+  ArrowUpRight, 
   Menu, 
   X,
-  Lock
+  ShieldCheck
 } from "lucide-react";
 
 export default function Navbar() {
   const location = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText("support@civicpulse.city");
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   const navLinks = [
-    { to: "/", label: "Home" },
-    { to: "/register-complaint", label: "Report Issue" },
+    { to: "/", label: "Overview" },
+    { to: "/register-complaint", label: "Report Defect" },
     { to: "/track-complaint", label: "Track Status" },
-    { to: "/authority", label: "Authority Council" },
+    { to: "/authority", label: "Authority Board" },
   ];
 
   return (
-    <header className="eco-navbar-wrap">
-      <nav className="eco-navbar">
-        {/* Brand Logo */}
-        <Link to="/" className="eco-brand">
-          <span className="eco-brand-name">Poulls<span className="brand-dot">.</span></span>
-          <span className="eco-brand-sub">CivicPulse</span>
-        </Link>
+    <header className="minimal-nav-container">
+      <div className="minimal-nav-bar">
+        {/* Left: Email / Contact Pill with Copy button */}
+        <div className="nav-left-pill-group">
+          <span className="nav-email-text">civic.triage@city.gov</span>
+          <button 
+            type="button" 
+            className="nav-tiny-pill-btn" 
+            onClick={handleCopyEmail}
+            title="Copy Civic Email"
+          >
+            {copied ? <Check size={11} className="text-emerald-600" /> : <Copy size={11} />}
+            <span>{copied ? "Copied" : "Copy"}</span>
+          </button>
+          <span className="nav-status-badge">
+            <span className="status-dot-green" />
+            <span>AI Active</span>
+          </span>
+        </div>
 
-        {/* Center Links */}
-        <div className="eco-nav-links">
+        {/* Center: Clean Text Navigation */}
+        <nav className="nav-center-links">
           {navLinks.map((item) => {
             const active = location.pathname === item.to;
             return (
               <Link 
                 key={item.to} 
                 to={item.to} 
-                className={`eco-nav-item ${active ? "active" : ""}`}
+                className={`nav-text-item ${active ? "active" : ""}`}
               >
                 {item.label}
               </Link>
             );
           })}
-        </div>
+        </nav>
 
-        {/* Right Actions */}
-        <div className="eco-nav-actions">
-          <Link to="/track-complaint" className="eco-search-btn" title="Search Complaint">
-            <Search size={16} />
-          </Link>
-
-          <Link to="/authority" className="eco-pill-btn">
-            <Lock size={13} />
-            <span>Council Portal</span>
+        {/* Right: Pill Action Buttons */}
+        <div className="nav-right-actions">
+          <Link to="/register-complaint" className="nav-black-pill-btn">
+            <span>Report Defect</span>
+            <ArrowUpRight size={14} />
           </Link>
 
           <button 
-            className="eco-mobile-toggle"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            aria-label="Toggle Navigation"
+            className="nav-mobile-toggle"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
-            {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
+            {mobileOpen ? <X size={20} /> : <Menu size={20} />}
           </button>
         </div>
-      </nav>
+      </div>
 
       {/* Mobile Drawer */}
-      {mobileMenuOpen && (
-        <div className="eco-mobile-drawer">
+      {mobileOpen && (
+        <div className="nav-mobile-drawer">
           {navLinks.map((item) => (
             <Link
               key={item.to}
               to={item.to}
-              className={`eco-mobile-item ${location.pathname === item.to ? "active" : ""}`}
-              onClick={() => setMobileMenuOpen(false)}
+              className={`nav-mobile-link ${location.pathname === item.to ? "active" : ""}`}
+              onClick={() => setMobileOpen(false)}
             >
               {item.label}
             </Link>
           ))}
           <Link
             to="/register-complaint"
-            className="eco-mobile-pill-btn"
-            onClick={() => setMobileMenuOpen(false)}
+            className="nav-mobile-action-btn"
+            onClick={() => setMobileOpen(false)}
           >
-            <PlusCircle size={16} />
-            <span>Report Civic Defect</span>
+            <span>Report Defect</span>
+            <ArrowUpRight size={15} />
           </Link>
         </div>
       )}

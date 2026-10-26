@@ -1,258 +1,300 @@
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { 
-  Leaf, 
+  ArrowUpRight, 
+  Cpu, 
   MapPin, 
-  Search, 
-  ArrowRight, 
-  User, 
   ShieldCheck, 
-  Sparkles,
-  TreePine,
-  CheckCircle2,
-  Clock,
-  Layers
+  Clock, 
+  Building2, 
+  Droplets, 
+  Zap, 
+  Truck, 
+  CheckCircle2, 
+  Search,
+  Handshake
 } from "lucide-react";
 import { fetchAllComplaints } from "../services/supabase";
 
 export default function Home() {
-  const navigate = useNavigate();
-  const [quickCategory, setQuickCategory] = useState("All");
-  const [quickLocation, setQuickLocation] = useState("");
-  const [stats, setStats] = useState({ total: 0, resolved: 0, inProgress: 0 });
+  const [stats, setStats] = useState({ total: 0, resolved: 0, inProgress: 0, critical: 0 });
 
   useEffect(() => {
     async function loadStats() {
-      const { complaints } = await fetchAllComplaints();
-      const total = complaints.length;
-      const resolved = complaints.filter(c => c.status === "Resolved").length;
-      const inProgress = complaints.filter(c => c.status === "In Progress").length;
-      setStats({ total, resolved, inProgress });
+      try {
+        const { complaints } = await fetchAllComplaints();
+        const total = complaints.length;
+        const resolved = complaints.filter(c => c.status === "Resolved").length;
+        const inProgress = complaints.filter(c => c.status === "In Progress").length;
+        const critical = complaints.filter(c => c.severity === "Critical" || c.priority === "Immediate").length;
+        setStats({ total, resolved, inProgress, critical });
+      } catch (err) {
+        console.error("Stats error:", err);
+      }
     }
     loadStats();
   }, []);
 
-  const handleQuickSearch = (e) => {
-    e.preventDefault();
-    if (quickLocation.trim()) {
-      navigate(`/authority?search=${encodeURIComponent(quickLocation)}`);
-    } else {
-      navigate("/register-complaint");
-    }
-  };
-
   return (
-    <div className="eco-home-content">
-      {/* 1. Hero Landscape Section */}
-      <section className="eco-hero-card">
-        {/* Background Image Container */}
-        <div className="eco-hero-bg">
-          <img 
-            src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=1800&q=85" 
-            alt="Eco-Friendly Community Landscape" 
-            className="eco-hero-img"
-          />
-          <div className="eco-hero-overlay" />
-        </div>
-
-        {/* Hero Overlay Text */}
-        <div className="eco-hero-content">
-          <div className="eco-hero-tag">
-            <span className="eco-tag-dot" />
-            <Leaf size={13} className="text-emerald-300" />
-            <span>Green Civic Action</span>
-          </div>
-
-          <h1 className="eco-hero-title">
-            Find Eco-Friendly <br />
-            Homes & Cities Easily
-          </h1>
-
-          <p className="eco-hero-sub">
-            Your one-stop AI municipal complaint analyzer. Report damaged roads, 
-            water main leaks, and safety hazards to keep our public spaces thriving.
-          </p>
-
-          <div className="eco-hero-actions">
-            <Link to="/register-complaint" className="eco-hero-btn">
-              <span>Report Issue</span>
-              <ArrowRight size={15} />
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* 2. Overlapping Floating Search / Filter Bar */}
-      <div className="eco-floating-search-wrap">
-        <form className="eco-floating-search-bar" onSubmit={handleQuickSearch}>
-          <div className="eco-search-col">
-            <label className="eco-field-label">Issue Category</label>
-            <select 
-              value={quickCategory} 
-              onChange={(e) => setQuickCategory(e.target.value)}
-              className="eco-search-input"
-            >
-              <option value="All">All Categories</option>
-              <option value="Roads">Roads & Potholes</option>
-              <option value="Water">Water & Sewage</option>
-              <option value="Power">Electricity & Lighting</option>
-              <option value="Sanitation">Garbage & Sanitation</option>
-            </select>
-          </div>
-
-          <div className="eco-search-divider" />
-
-          <div className="eco-search-col flex-1">
-            <label className="eco-field-label">Location or Ward</label>
-            <input 
-              type="text" 
-              placeholder="e.g. Market Road, Ward 14..."
-              value={quickLocation}
-              onChange={(e) => setQuickLocation(e.target.value)}
-              className="eco-search-input"
+    <div className="minimal-page-wrapper">
+      {/* 1. Hero Bento Island */}
+      <section className="bento-island hero-island">
+        {/* Avatar with Speech Bubble */}
+        <div className="hero-avatar-row">
+          <div className="hero-avatar-wrap">
+            <img 
+              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=80" 
+              alt="Municipal Dispatch AI" 
+              className="hero-avatar-img"
             />
           </div>
+          <div className="hero-speech-bubble">
+            <span className="live-ping-dot" />
+            <span>CivicPulse AI • Live Triage v2.4 👋</span>
+          </div>
+        </div>
 
-          <div className="eco-search-icons">
-            <span className="eco-icon-circle"><User size={15} /></span>
-            <span className="eco-icon-circle"><Search size={15} /></span>
-            <span className="eco-status-counter" title="Total Active">{stats.total}</span>
+        {/* Big Bold Minimalist Headline */}
+        <h1 className="hero-giant-headline">
+          Building responsive <br />
+          public services, safer roads, and <br />
+          accountable cities.
+        </h1>
+
+        {/* Action Button Pills */}
+        <div className="hero-pill-actions">
+          <Link to="/register-complaint" className="btn-black-pill">
+            <span>Report Defect</span>
+            <ArrowUpRight size={15} />
+          </Link>
+          <Link to="/track-complaint" className="btn-white-pill">
+            <span>Track by Reference ID</span>
+          </Link>
+        </div>
+
+        {/* Monochrome Department Logos Strip */}
+        <div className="department-strip-wrap">
+          <div className="department-strip">
+            <div className="dept-item">
+              <Building2 size={16} />
+              <span>PUBLIC WORKS DEPT</span>
+            </div>
+            <div className="dept-item">
+              <Droplets size={16} />
+              <span>WATER & SEWERAGE BOARD</span>
+            </div>
+            <div className="dept-item">
+              <Zap size={16} />
+              <span>STATE POWER CORP</span>
+            </div>
+            <div className="dept-item">
+              <Truck size={16} />
+              <span>CITY SANITATION WING</span>
+            </div>
+            <div className="dept-item">
+              <ShieldCheck size={16} />
+              <span>DISASTER SAFETY CELL</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 2. Capabilities & Collaboration Island */}
+      <section className="bento-island capabilities-island">
+        <h2 className="section-centered-heading">
+          Collaborating with citizens and municipal agencies <br />
+          to create immediate civic impact.
+        </h2>
+
+        <div className="center-pill-tag">
+          <span>Capabilities</span>
+        </div>
+
+        <div className="capabilities-grid-4">
+          <div className="cap-col">
+            <div className="cap-icon-wrap">
+              <Cpu size={22} />
+            </div>
+            <h3>AI Defect Triage</h3>
+            <p>
+              Natural language processing automatically extracts category, severity, and urgency factors from citizen text.
+            </p>
           </div>
 
-          <button type="submit" className="eco-submit-pill-btn">
-            <span>Inspect</span>
-          </button>
-        </form>
-      </div>
+          <div className="cap-col">
+            <div className="cap-icon-wrap">
+              <MapPin size={22} />
+            </div>
+            <h3>GIS Geolocation</h3>
+            <p>
+              Interactive Leaflet mapping pinpoints incidents with latitude, longitude, and reverse-geocoded street addresses.
+            </p>
+          </div>
 
-      {/* 3. Welcome / Mission Section (Two Columns) */}
-      <section className="eco-welcome-section">
-        <div className="eco-welcome-grid">
-          {/* Left: Inset Photo with Circular Badges */}
-          <div className="eco-welcome-visual">
-            <div className="eco-image-frame">
+          <div className="cap-col">
+            <div className="cap-icon-wrap">
+              <ShieldCheck size={22} />
+            </div>
+            <h3>Authority Dispatch</h3>
+            <p>
+              Municipal ward engineers receive structured queues with target SLAs, priority rankings, and photographic proof.
+            </p>
+          </div>
+
+          <div className="cap-col">
+            <div className="cap-icon-wrap">
+              <Clock size={22} />
+            </div>
+            <h3>Lifecycle Tracking</h3>
+            <p>
+              Transparent milestones from submission through field inspection to verified closure and resolution remarks.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Real Municipal Infrastructure & Defect Showcase Island */}
+      <section className="bento-island showcase-island">
+        <div className="showcase-header">
+          <div>
+            <span className="small-section-label">CITY INFRASTRUCTURE</span>
+            <h2>Active Civic Sectors Covered</h2>
+          </div>
+          <Link to="/authority" className="btn-white-pill">
+            <span>View Authority Board</span>
+            <ArrowUpRight size={14} />
+          </Link>
+        </div>
+
+        <div className="showcase-grid-2x2">
+          {/* Item 1: Road & Pothole Repair */}
+          <div className="showcase-card">
+            <div className="showcase-img-wrap">
               <img 
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80" 
-                alt="Municipal Community Space" 
-                className="eco-welcome-img"
+                src="https://images.unsplash.com/photo-1515162816999-a0c47dc192f7?auto=format&fit=crop&w=900&q=80" 
+                alt="Road and Pothole Repair Work" 
+                className="showcase-img"
               />
-
-              {/* Floating Green Circle Badge on Top Left */}
-              <div className="eco-badge-circle top-left">
-                <Leaf size={16} />
-                <span>100% Civic Focus</span>
-              </div>
-
-              {/* Floating Orange Leaf Badge on Bottom Right */}
-              <div className="eco-badge-circle bottom-right accent">
-                <Sparkles size={16} />
-              </div>
+              <span className="showcase-badge">Roads & Infrastructure</span>
+            </div>
+            <div className="showcase-card-body">
+              <h3>Asphalt Resurfacing & Pothole Repair</h3>
+              <p>
+                Prompt patching of dangerous craters, broken culverts, and eroded pedestrian pathways to keep urban transit smooth.
+              </p>
+              <Link to="/register-complaint" className="card-arrow-link">
+                <span>File Road Report</span>
+                <ArrowUpRight size={14} />
+              </Link>
             </div>
           </div>
 
-          {/* Right: Descriptive Content */}
-          <div className="eco-welcome-info">
-            <h2 className="eco-welcome-heading">Welcome on CivicPulse?</h2>
-            <p className="eco-welcome-text">
-              We empower citizens and municipal councils to maintain clean, 
-              sustainable, and well-functioning neighborhoods. With instant AI defect triage, 
-              automatic hazard detection, and transparent tracking, every report reaches 
-              the right department within minutes.
-            </p>
-            <p className="eco-welcome-subtext">
-              From restoring fresh water supply lines to fixing deep potholes and hazardous electrical lines, 
-              our digital civic platform turns community issues into resolved actions.
-            </p>
-
-            <div className="eco-welcome-actions">
-              <Link to="/authority" className="eco-pill-cta">
-                <MapPin size={15} />
-                <span>Council Board</span>
+          {/* Item 2: Water Supply Pipelines */}
+          <div className="showcase-card">
+            <div className="showcase-img-wrap">
+              <img 
+                src="https://images.unsplash.com/photo-1584467735871-8e85353a8413?auto=format&fit=crop&w=900&q=80" 
+                alt="Municipal Water Main Leak Repair" 
+                className="showcase-img"
+              />
+              <span className="showcase-badge">Water & Sewage</span>
+            </div>
+            <div className="showcase-card-body">
+              <h3>Drinking Water Mains & Sewerage Systems</h3>
+              <p>
+                Fast emergency isolation of burst mainlines, sewage overflow remediation, and drainage blockage clearing.
+              </p>
+              <Link to="/register-complaint" className="card-arrow-link">
+                <span>File Water Report</span>
+                <ArrowUpRight size={14} />
               </Link>
-              <Link to="/track-complaint" className="eco-text-link">
-                Track Status →
+            </div>
+          </div>
+
+          {/* Item 3: Electrical Infrastructure */}
+          <div className="showcase-card">
+            <div className="showcase-img-wrap">
+              <img 
+                src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=80" 
+                alt="Electrical Power Line Inspection" 
+                className="showcase-img"
+              />
+              <span className="showcase-badge">Electricity & Lighting</span>
+            </div>
+            <div className="showcase-card-body">
+              <h3>Transformer Maintenance & Street Lighting</h3>
+              <p>
+                Priority safety dispatch for sparking live wires, fallen utility cables, and dark public corridors.
+              </p>
+              <Link to="/register-complaint" className="card-arrow-link">
+                <span>File Power Report</span>
+                <ArrowUpRight size={14} />
+              </Link>
+            </div>
+          </div>
+
+          {/* Item 4: Sanitation & Waste Management */}
+          <div className="showcase-card">
+            <div className="showcase-img-wrap">
+              <img 
+                src="https://images.unsplash.com/photo-1605600659908-0ef719419d41?auto=format&fit=crop&w=900&q=80" 
+                alt="Clean City Sanitation Management" 
+                className="showcase-img"
+              />
+              <span className="showcase-badge">Garbage & Hygiene</span>
+            </div>
+            <div className="showcase-card-body">
+              <h3>Solid Waste Management & Sanitation</h3>
+              <p>
+                Deployment of heavy compactor vehicles for illegal dumpsites, biomedical waste removal, and public hygiene.
+              </p>
+              <Link to="/register-complaint" className="card-arrow-link">
+                <span>File Sanitation Report</span>
+                <ArrowUpRight size={14} />
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 4. Bottom 3 Focus Cards Section */}
-      <section className="eco-cards-section">
-        <div className="eco-section-center-header">
-          <h2 className="eco-section-title">Key Municipal Focus Areas</h2>
+      {/* 4. Bottom CTA Island (Matching "Tell me about your next project") */}
+      <section className="bento-island cta-island">
+        <div className="cta-icon-circle">
+          <Handshake size={24} className="text-zinc-800" />
         </div>
 
-        <div className="eco-cards-grid">
-          {/* Card 1 */}
-          <div className="eco-feature-card">
-            <div className="eco-card-img-wrap">
-              <img 
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=800&q=80" 
-                alt="Green Roadways" 
-                className="eco-card-img"
-              />
-            </div>
-            <div className="eco-card-body">
-              <h3 className="eco-card-title">Well Eco-Friendly Roads</h3>
-              <p className="eco-card-desc">
-                Pothole resurfacing, culvert repairs, and pedestrian walkway safety audits across urban wards.
-              </p>
-              <Link to="/register-complaint" className="eco-card-pill-btn">
-                <span>Report Road</span>
-              </Link>
-            </div>
-          </div>
+        <h2 className="cta-giant-heading">
+          Tell us about your next <br />
+          neighborhood issue
+        </h2>
 
-          {/* Card 2 */}
-          <div className="eco-feature-card">
-            <div className="eco-card-img-wrap">
-              <img 
-                src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" 
-                alt="Clean Water Systems" 
-                className="eco-card-img"
-              />
-            </div>
-            <div className="eco-card-body">
-              <h3 className="eco-card-title">Sustainably Living Water</h3>
-              <p className="eco-card-desc">
-                Fast resolution for main water bursts, contaminated supplies, and storm drainage blockages.
-              </p>
-              <Link to="/register-complaint" className="eco-card-pill-btn">
-                <span>Report Water</span>
-              </Link>
-            </div>
-          </div>
+        <p className="cta-subtext">
+          Submit defects directly with automatic AI categorization, evidence upload, 
+          and live tracking backed by Supabase.
+        </p>
 
-          {/* Card 3 */}
-          <div className="eco-feature-card">
-            <div className="eco-card-img-wrap">
-              <img 
-                src="https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?auto=format&fit=crop&w=800&q=80" 
-                alt="Public Power and Lighting" 
-                className="eco-card-img"
-              />
-            </div>
-            <div className="eco-card-body">
-              <h3 className="eco-card-title">Community Power & Safety</h3>
-              <p className="eco-card-desc">
-                Immediate dispatch for broken streetlights, exposed live wires, and high-voltage hazards.
-              </p>
-              <Link to="/register-complaint" className="eco-card-pill-btn">
-                <span>Report Power</span>
-              </Link>
-            </div>
-          </div>
-        </div>
-
-        {/* Carousel Pagination Dots */}
-        <div className="eco-pagination-dots">
-          <span className="eco-dot active" />
-          <span className="eco-dot" />
-          <span className="eco-dot" />
-          <span className="eco-dot" />
+        <div className="cta-buttons-row">
+          <Link to="/register-complaint" className="btn-black-pill">
+            <span>Report Defect</span>
+            <ArrowUpRight size={15} />
+          </Link>
+          <Link to="/track-complaint" className="btn-white-pill">
+            <span>Track Progress</span>
+          </Link>
         </div>
       </section>
+
+      {/* 5. Minimalist Clean Footer */}
+      <footer className="minimal-footer">
+        <div className="footer-left-copy">
+          © 2026 CivicPulse AI. All municipal wards supported.
+        </div>
+        <div className="footer-right-links">
+          <Link to="/authority">Council Portal</Link>
+          <Link to="/track-complaint">Tracker</Link>
+          <a href="https://supabase.com" target="_blank" rel="noreferrer">Supabase</a>
+        </div>
+      </footer>
     </div>
   );
 }
