@@ -28,16 +28,23 @@ function App() {
           </Routes>
         </main>
 
-        <footer className="site-footer">
-          <div className="footer-inner">
-            <div className="footer-left">
-              <strong>CivicPulse AI</strong> — Municipal Complaint & Public Infrastructure Triage
+        <footer className="global-site-footer">
+          <div className="footer-inner-content">
+            <div className="footer-brand-wrap">
+              <Link to="/" className="footer-brand-logo">
+                <span className="footer-brand-dot" />
+                <span className="footer-brand-title">CivicPulse</span>
+              </Link>
+              <span className="footer-brand-copy">© 2026 CivicPulse</span>
             </div>
-            <div className="footer-right">
-              <span>Backed by Supabase PostgreSQL</span>
-              <span className="footer-divider">•</span>
-              <Link to="/admin" className="footer-admin-link">Staff Admin</Link>
-            </div>
+
+            <nav className="footer-nav-menu">
+              <Link to="/" className="footer-link-item">Overview</Link>
+              <Link to="/register-complaint" className="footer-link-item">Report Defect</Link>
+              <Link to="/track-complaint" className="footer-link-item">Track Status</Link>
+              <Link to="/authority" className="footer-link-item">Authority Board</Link>
+              <Link to="/admin" className="footer-link-item footer-admin-link">Admin Portal</Link>
+            </nav>
           </div>
         </footer>
       </div>

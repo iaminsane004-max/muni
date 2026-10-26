@@ -268,20 +268,6 @@ export default function Home() {
           </Link>
         </div>
       </section>
-
-      {/* 5. Minimalist Clean Footer */}
-      <footer className="minimal-footer">
-        <div className="footer-left-copy">
-          © 2026 CivicPulse AI. All municipal wards supported.
-        </div>
-        <div className="footer-right-links">
-          <Link to="/authority">Council Portal</Link>
-          <Link to="/track-complaint">Tracker</Link>
-          <a href="https://supabase.com" target="_blank" rel="noreferrer">Supabase</a>
-          <span className="footer-divider">•</span>
-          <Link to="/admin" className="footer-admin-link">Staff Admin</Link>
-        </div>
-      </footer>
     </div>
   );
 }

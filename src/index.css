@@ -1846,25 +1846,107 @@ body {
 }
 
 /* ==============================================================================
-   Admin Control Center & Supabase Auth Styles
+   Global Site Footer (Clean Monochrome Swiss)
    ============================================================================== */
 
-.footer-divider {
-  color: #d4d4d8;
-  margin: 0 0.4rem;
+.global-site-footer {
+  margin-top: 3.5rem;
+  padding: 1.75rem 0 1rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.footer-admin-link {
-  color: #71717a;
+.footer-inner-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.footer-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.footer-brand-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
   text-decoration: none;
-  font-size: 0.82rem;
-  font-weight: 600;
-  transition: color 0.2s ease;
 }
 
-.footer-admin-link:hover {
-  color: #18181b;
-  text-decoration: underline;
+.footer-brand-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #111111;
+}
+
+.footer-brand-title {
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text-black);
+}
+
+.footer-brand-copy {
+  font-size: 0.8rem;
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+.footer-nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer-link-item {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.84rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.footer-link-item:hover {
+  color: var(--text-black);
+}
+
+.footer-link-item.footer-admin-link {
+  color: #71717a;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.footer-link-item.footer-admin-link:hover {
+  background: #111111;
+  border-color: #111111;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+@media (max-width: 768px) {
+  .footer-inner-content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1.25rem;
+  }
+  .footer-brand-wrap {
+    justify-content: center;
+  }
+  .footer-nav-menu {
+    justify-content: center;
+    gap: 1rem;
+  }
 }
 
 /* Auth Login Screen */
