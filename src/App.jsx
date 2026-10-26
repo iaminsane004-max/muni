@@ -1,24 +1,21 @@
 import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import { Header } from "./components/ui/header-2";
 import Home from "./pages/Home";
 import RegisterComplaint from "./pages/RegisterComplaint";
 import TrackComplaint from "./pages/TrackComplaint";
 import AuthorityDashboard from "./pages/AuthorityDashboard";
 import AdminPortal from "./pages/AdminPortal";
-import Demo from "./components/ui/demo";
 import "./index.css";
 
 function App() {
   return (
     <BrowserRouter>
       <div className="app-shell">
-        <Navbar />
+        <Header />
 
         <main className="main-content-viewport">
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/demo" element={<Demo />} />
-            <Route path="/header-demo" element={<Demo />} />
             <Route path="/register-complaint" element={<RegisterComplaint />} />
             <Route path="/track-complaint" element={<TrackComplaint />} />
             <Route path="/authority" element={<AuthorityDashboard />} />
