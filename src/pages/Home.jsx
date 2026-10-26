@@ -39,21 +39,6 @@ export default function Home() {
     <div className="minimal-page-wrapper">
       {/* 1. Hero Bento Island */}
       <section className="bento-island hero-island">
-        {/* Avatar with Speech Bubble */}
-        <div className="hero-avatar-row">
-          <div className="hero-avatar-wrap">
-            <img 
-              src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=160&h=160&q=80" 
-              alt="Municipal Dispatch AI" 
-              className="hero-avatar-img"
-            />
-          </div>
-          <div className="hero-speech-bubble">
-            <span className="live-ping-dot" />
-            <span>CivicPulse AI • Live Triage v2.4 👋</span>
-          </div>
-        </div>
-
         {/* Big Bold Minimalist Headline */}
         <h1 className="hero-giant-headline">
           Building responsive <br />
