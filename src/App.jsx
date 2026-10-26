@@ -1,9 +1,10 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate, Link } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import RegisterComplaint from "./pages/RegisterComplaint";
 import TrackComplaint from "./pages/TrackComplaint";
 import AuthorityDashboard from "./pages/AuthorityDashboard";
+import AdminPortal from "./pages/AdminPortal";
 import GlowHorizonDemo from "./components/ui/demo";
 import "./index.css";
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/register-complaint" element={<RegisterComplaint />} />
             <Route path="/track-complaint" element={<TrackComplaint />} />
             <Route path="/authority" element={<AuthorityDashboard />} />
+            <Route path="/admin" element={<AdminPortal />} />
             <Route path="/citizen" element={<Navigate to="/register-complaint" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
@@ -32,6 +34,8 @@ function App() {
             </div>
             <div className="footer-right">
               <span>Backed by Supabase PostgreSQL</span>
+              <span className="footer-divider">•</span>
+              <Link to="/admin" className="footer-admin-link">Staff Admin</Link>
             </div>
           </div>
         </footer>

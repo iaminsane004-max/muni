@@ -278,6 +278,8 @@ export default function Home() {
           <Link to="/authority">Council Portal</Link>
           <Link to="/track-complaint">Tracker</Link>
           <a href="https://supabase.com" target="_blank" rel="noreferrer">Supabase</a>
+          <span className="footer-divider">•</span>
+          <Link to="/admin" className="footer-admin-link">Staff Admin</Link>
         </div>
       </footer>
     </div>

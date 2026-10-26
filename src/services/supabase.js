@@ -268,3 +268,100 @@ export function subscribeToComplaints(onUpdate) {
     supabase.removeChannel(channel);
   };
 }
+
+// 6. Supabase Authentication for Admin Panel
+export async function signInAdmin(email, password) {
+  if (!supabase) return { error: { message: "Supabase client not initialized." } };
+  return await supabase.auth.signInWithPassword({
+    email: email.trim(),
+    password: password.trim()
+  });
+}
+
+export async function signUpAdmin(email, password) {
+  if (!supabase) return { error: { message: "Supabase client not initialized." } };
+  return await supabase.auth.signUp({
+    email: email.trim(),
+    password: password.trim()
+  });
+}
+
+export async function signOutAdmin() {
+  if (!supabase) return;
+  return await supabase.auth.signOut();
+}
+
+export async function getAdminSession() {
+  if (!supabase) return null;
+  const { data } = await supabase.auth.getSession();
+  return data?.session || null;
+}
+
+export function onAdminAuthStateChange(callback) {
+  if (!supabase) return () => {};
+  const { data: listener } = supabase.auth.onAuthStateChange((event, session) => {
+    callback(event, session);
+  });
+  return () => {
+    listener?.subscription?.unsubscribe();
+  };
+}
+
+// 7. Full Admin Update
+export async function adminUpdateComplaint(id, fields) {
+  const now = new Date().toISOString();
+  const updatePayload = {
+    ...fields,
+    updated_at: now
+  };
+
+  if (supabase) {
+    try {
+      const { data, error } = await supabase
+        .from("complaints")
+        .update(updatePayload)
+        .eq("id", id)
+        .select()
+        .single();
+
+      if (!error && data) {
+        return { success: true, complaint: data, source: "supabase" };
+      }
+      if (error) throw error;
+    } catch (updateErr) {
+      console.warn("Supabase admin update error:", updateErr);
+      return { success: false, message: updateErr.message };
+    }
+  }
+
+  const idx = localCache.findIndex(c => c.id === id);
+  if (idx !== -1) {
+    localCache[idx] = { ...localCache[idx], ...updatePayload };
+    return { success: true, complaint: localCache[idx], source: "local" };
+  }
+  return { success: false, message: "Record not found" };
+}
+
+// 8. Admin Delete
+export async function deleteComplaint(id) {
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from("complaints")
+        .delete()
+        .eq("id", id);
+
+      if (!error) {
+        return { success: true };
+      }
+      throw error;
+    } catch (delErr) {
+      console.warn("Supabase delete error:", delErr);
+      return { success: false, message: delErr.message };
+    }
+  }
+
+  localCache = localCache.filter(c => c.id !== id);
+  return { success: true };
+}
+
