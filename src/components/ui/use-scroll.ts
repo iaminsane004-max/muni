@@ -5,22 +5,12 @@ export function useScroll(threshold: number = 10): boolean {
 
   useEffect(() => {
     const handleScroll = () => {
-      const scrollY = 
-        window.scrollY ?? 
-        window.pageYOffset ?? 
-        document.documentElement.scrollTop ?? 
-        document.body.scrollTop ?? 
-        0;
-      setScrolled(scrollY > threshold);
+      setScrolled(window.scrollY > threshold);
     };
 
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    document.addEventListener("scroll", handleScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      document.removeEventListener("scroll", handleScroll);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [threshold]);
 
   return scrolled;

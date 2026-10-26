@@ -3,7 +3,6 @@ import { Header } from "./components/ui/header-2";
 import Home from "./pages/Home";
 import RegisterComplaint from "./pages/RegisterComplaint";
 import TrackComplaint from "./pages/TrackComplaint";
-import AuthorityDashboard from "./pages/AuthorityDashboard";
 import AdminPortal from "./pages/AdminPortal";
 import "./index.css";
 
@@ -18,7 +17,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/register-complaint" element={<RegisterComplaint />} />
             <Route path="/track-complaint" element={<TrackComplaint />} />
-            <Route path="/authority" element={<AuthorityDashboard />} />
+            <Route path="/authority" element={<Navigate to="/admin" replace />} />
             <Route path="/admin" element={<AdminPortal />} />
             <Route path="/citizen" element={<Navigate to="/register-complaint" replace />} />
             <Route path="*" element={<Navigate to="/" replace />} />
@@ -39,7 +38,6 @@ function App() {
               <Link to="/" className="footer-link-item">Overview</Link>
               <Link to="/register-complaint" className="footer-link-item">Report Defect</Link>
               <Link to="/track-complaint" className="footer-link-item">Track Status</Link>
-              <Link to="/authority" className="footer-link-item">Authority Board</Link>
               <Link to="/admin" className="footer-link-item footer-admin-link">Admin Portal</Link>
             </nav>
           </div>
@@ -50,3 +48,4 @@ function App() {
 }
 
 export default App;
+

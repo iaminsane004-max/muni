@@ -456,6 +456,28 @@ export default function AdminPortal() {
               <option value="Low">Low</option>
             </select>
 
+            {/* View Mode Toggle */}
+            <div className="view-toggle-btns">
+              <button 
+                type="button"
+                className={`toggle-btn ${activeTab === "table" ? "active" : ""}`}
+                onClick={() => setActiveTab("table")}
+                title="Full Data Table View"
+              >
+                <List size={14} />
+                <span>Data Grid</span>
+              </button>
+              <button 
+                type="button"
+                className={`toggle-btn ${activeTab === "split" ? "active" : ""}`}
+                onClick={() => setActiveTab("split")}
+                title="Split Map & List View"
+              >
+                <Layers size={14} />
+                <span>GIS Map</span>
+              </button>
+            </div>
+
             <button 
               className="action-btn-outline" 
               onClick={handleExportCSV}
@@ -477,8 +499,65 @@ export default function AdminPortal() {
         </div>
       </div>
 
-      {/* Full Specifications Data Table */}
-      <div className="bento-island admin-table-island">
+      {/* Main Content Area: Map Split View or Full Specifications Table */}
+      {activeTab === "split" ? (
+        <div className="split-view-grid mb-6">
+          {/* Left: GIS Map */}
+          <div className="bento-island map-view-column">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-extrabold text-base text-zinc-900">City Incident GIS Map</h3>
+              <span className="reference-pill">{filteredComplaints.length} markers</span>
+            </div>
+            <InteractiveMap 
+              markers={filteredComplaints}
+              center={[12.9716, 77.5946]}
+              zoom={12}
+              height="580px"
+            />
+          </div>
+
+          {/* Right: Active Incident Cards */}
+          <div className="bento-island list-view-column">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="font-extrabold text-base text-zinc-900">Active Incident Queue</h3>
+              <span className="reference-pill">{filteredComplaints.length} records</span>
+            </div>
+
+            <div className="queue-cards-list max-h-[580px] overflow-y-auto pr-1">
+              {filteredComplaints.length === 0 ? (
+                <div className="text-center py-10 text-zinc-400">No complaints matching current filters.</div>
+              ) : (
+                filteredComplaints.map((item) => (
+                  <div key={item.id} className="queue-card mb-3">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="font-mono text-xs font-bold text-zinc-900">{item.id}</span>
+                      <span className={`status-pill status-${(item.status || "submitted").toLowerCase().replace(/\s+/g, "-")}`}>
+                        {item.status}
+                      </span>
+                    </div>
+                    <div className="font-bold text-xs text-zinc-900 mb-1">{item.title || item.description.slice(0, 45)}</div>
+                    <div className="text-xs text-zinc-500 line-clamp-2 mb-2">{item.description}</div>
+                    <div className="flex items-center justify-between pt-2 border-t border-zinc-100">
+                      <span className={`severity-tag severity-${(item.severity || "medium").toLowerCase()}`}>{item.severity}</span>
+                      <div className="flex items-center gap-1.5">
+                        <button className="table-btn edit" onClick={() => handleOpenEdit(item)}>
+                          <Edit3 size={12} />
+                          <span>Edit</span>
+                        </button>
+                        <button className="table-btn delete" onClick={() => handleDeleteComplaint(item.id)}>
+                          <Trash2 size={12} />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
+        </div>
+      ) : (
+        /* Full Specifications Data Table */
+        <div className="bento-island admin-table-island">
         <div className="table-responsive">
           <table className="admin-full-specs-table">
             <thead>
@@ -592,6 +671,7 @@ export default function AdminPortal() {
           </table>
         </div>
       </div>
+      )}
 
       {/* Edit Specification & Status Modal */}
       {selectedComplaint && (
