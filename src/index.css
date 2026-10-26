@@ -118,7 +118,7 @@ body {
   min-height: 100vh;
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
-  padding: 1.75rem 1rem 3rem;
+  padding: 0.75rem 1rem 3rem;
 }
 
 .app-shell {
@@ -129,39 +129,56 @@ body {
 }
 
 /* ==============================================================================
-   Minimalist Navigation Bar
+   Site Header Navbar (Sticky & Translucent Frosted Glass on Scroll)
    ============================================================================== */
 
-.minimal-nav-container {
-  margin-bottom: 1.25rem;
+.site-header-root {
+  position: sticky;
+  top: 0.75rem;
+  z-index: 1000;
+  width: 100%;
+  max-width: 1140px;
+  margin: 0 auto 1.5rem;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.minimal-nav-bar {
+.site-header-root.site-header-scrolled {
+  top: 0.75rem;
+  max-width: 880px;
+}
+
+.site-header-nav {
   background: #ffffff;
+  border: 1px solid var(--border-card);
   border-radius: 9999px;
-  padding: 0.65rem 1.25rem;
+  padding: 0.45rem 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid var(--border-card);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 54px;
 }
 
-.nav-brand-logo {
-  display: flex;
+.site-header-scrolled .site-header-nav {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.08);
+  padding: 0.35rem 1rem;
+}
+
+/* Brand Logo */
+.site-brand-logo {
+  display: inline-flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.5rem;
   text-decoration: none;
-  padding: 0.2rem 0.6rem;
-  border-radius: 9999px;
-  transition: all 0.2s ease;
+  color: var(--text-black);
 }
 
-.nav-brand-logo:hover {
-  opacity: 0.8;
-}
-
-.nav-brand-dot {
+.site-brand-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
@@ -169,99 +186,159 @@ body {
   display: inline-block;
 }
 
-.nav-brand-text {
+.site-brand-text {
   font-size: 1.05rem;
   font-weight: 850;
   letter-spacing: -0.03em;
   color: #111111;
 }
 
-.nav-center-links {
+/* Desktop Links */
+.site-desktop-links {
   display: flex;
   align-items: center;
-  gap: 1.75rem;
+  gap: 0.5rem;
 }
 
-.nav-text-item {
-  text-decoration: none;
-  font-size: 0.88rem;
-  font-weight: 500;
+.site-nav-pill-link {
+  font-size: 0.84rem;
+  font-weight: 600;
   color: var(--text-muted);
-  transition: color 0.2s ease;
-}
-
-.nav-text-item:hover,
-.nav-text-item.active {
-  color: var(--text-black);
-  font-weight: 600;
-}
-
-.nav-right-actions {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-}
-
-.nav-black-pill-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  background: var(--pill-black);
-  color: #ffffff;
-  padding: 0.5rem 1.15rem;
-  border-radius: 9999px;
-  font-size: 0.82rem;
-  font-weight: 600;
   text-decoration: none;
+  padding: 0.45rem 0.95rem;
+  border-radius: 9999px;
   transition: all 0.2s ease;
 }
 
-.nav-black-pill-btn:hover {
-  background: var(--pill-black-hover);
-  transform: translateY(-1px);
+.site-nav-pill-link:hover {
+  color: var(--text-black);
+  background: #f4f4f5;
 }
 
-.nav-mobile-toggle {
-  display: none;
-  background: none;
-  border: none;
+.site-nav-pill-link.active {
+  color: var(--text-black);
+  background: #f4f4f5;
+  font-weight: 700;
+}
+
+/* Desktop Actions */
+.site-desktop-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.site-btn-signin {
+  font-size: 0.82rem;
+  font-weight: 700;
   color: var(--text-dark);
+  text-decoration: none;
+  background: #ffffff;
+  border: 1px solid #e4e4e7;
+  padding: 0.45rem 1rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.site-btn-signin:hover {
+  background: #f4f4f5;
+}
+
+.site-btn-cta {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  text-decoration: none;
+  background: #111111;
+  padding: 0.5rem 1.15rem;
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+}
+
+.site-btn-cta:hover {
+  background: #27272a;
+}
+
+/* Mobile Toggle */
+.site-mobile-toggle-btn {
+  display: none;
+  background: #f4f4f5;
+  border: 1px solid #e4e4e7;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
   cursor: pointer;
 }
 
-.nav-mobile-drawer {
-  display: none;
-  flex-direction: column;
-  gap: 0.75rem;
-  margin-top: 0.75rem;
-  background: #ffffff;
-  padding: 1.25rem;
-  border-radius: 20px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.05);
+/* Mobile Drawer */
+.site-mobile-drawer {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 28px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.12);
+  padding: 1.5rem;
+  animation: fadeInDown 0.25s ease-out;
 }
 
-.nav-mobile-link {
-  text-decoration: none;
-  font-weight: 600;
-  color: var(--text-muted);
-  padding: 0.4rem 0;
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.nav-mobile-link.active {
-  color: var(--text-black);
-}
-
-.nav-mobile-action-btn {
+.site-mobile-links-list {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.45rem;
-  background: var(--pill-black);
-  color: white;
-  padding: 0.75rem;
-  border-radius: 9999px;
-  text-decoration: none;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.site-mobile-link-item {
+  font-size: 0.95rem;
   font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 16px;
+  transition: all 0.2s ease;
+}
+
+.site-mobile-link-item:hover,
+.site-mobile-link-item.active {
+  background: #f4f4f5;
+  color: #111111;
+  font-weight: 700;
+}
+
+.site-mobile-actions-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding-top: 1rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+@media (max-width: 768px) {
+  .site-desktop-links,
+  .site-desktop-actions {
+    display: none;
+  }
+  .site-mobile-toggle-btn {
+    display: flex;
+  }
 }
 
 /* ==============================================================================
